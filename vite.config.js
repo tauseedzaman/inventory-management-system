@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
+import * as laravelPlugin from 'laravel-vite-plugin'; // AI Refactor Patch: Switched to namespace import for laravel-vite-plugin to support both default and named exports because Vite 4.5.0 -> 6.4.3 requires upgrading laravel-vite-plugin (0.7.x is incompatible). Using a resilient import pattern helps work with newer laravel-vite-plugin (>=1.1.0) without changing call sites.
 import { viteStaticCopy } from "vite-plugin-static-copy";
+
+const laravel = laravelPlugin.default ?? laravelPlugin.laravel ?? laravelPlugin; // AI Refactor Patch: Selected the plugin factory from possible default or named exports to accommodate laravel-vite-plugin API differences when upgrading to a version compatible with Vite 6 (>=1.1.0). This prevents runtime errors from mismatched export shapes after the Vite 4.5.0 -> 6.4.3 upgrade.
 
 export default defineConfig({
     plugins: [
